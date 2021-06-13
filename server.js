@@ -34,8 +34,8 @@ function viewAllEmployees() {
   db.query(sql, (err, rows) => {
     if (err) throw err;
     console.table(rows);
+    userPrompt();
   });
-  userPrompt;
 }
 
 function addDepartment() {
@@ -111,9 +111,9 @@ function addRole() {
       db.query(sql, params, (err, rows) => {
         if (err) throw err;
         console.log("new role added");
+        userPrompt();
       });
     });
-  userPrompt();
 }
 
 function userPrompt() {
