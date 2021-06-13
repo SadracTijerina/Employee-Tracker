@@ -1,16 +1,3 @@
-const mysql = require("mysql2");
-
-// Connect to database
-const db = mysql.createConnection(
-  {
-    host: "localhost",
-    // Your MySQL username,
-    user: "root",
-    // Your MySQL password
-    password: "afadfa",
-    database: "employee-tracker",
-  },
-  console.log("Connected to the election database.")
-);
-
-module.exports = db;
+DROP DATABASE IF EXISTS EmployeeTracker;
+CREATE DATABASE EmployeeTracker;
+USE EmployeeTracker;

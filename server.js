@@ -1,6 +1,15 @@
 const inquirer = require("inquirer");
-const db = "./db/connection";
+const db = require("./db/connection");
 const tableFormat = require("console.table");
+
+function viewAllDepartments() {
+  const sql = "SELECT * from department";
+  db.query(sql, (err, rows) => {
+    if (err) throw err;
+    console.table(rows);
+    userPrompt();
+  });
+}
 
 function userPrompt() {
   inquirer
@@ -25,7 +34,7 @@ function userPrompt() {
     .then((response) => {
       switch (response.userInput) {
         case "View all departments":
-          //function
+          viewAllDepartments();
           break;
         case "View all roles":
           //function
