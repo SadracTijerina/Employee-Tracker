@@ -38,6 +38,84 @@ function viewAllEmployees() {
   userPrompt;
 }
 
+function addDepartment() {
+  inquirer
+    .prompt({
+      type: "input",
+      name: "name",
+      message: "Input name of department:",
+      validate: (name) => {
+        if (name) {
+          return true;
+        } else {
+          console.log("Enter department name");
+          return false;
+        }
+      },
+    })
+    .then((newDepartment) => {
+      const sql = `INSERT INTO department (name) VALUES (?)`;
+      const params = newDepartment.name;
+      db.query(sql, params, (err, rows) => {
+        if (err) throw err;
+        console.log("New department successfully added");
+        userPrompt();
+      });
+    });
+}
+
+function addRole() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "title",
+        message: "Input the position you would like to add: ",
+        validate: (title) => {
+          if (title) {
+            return true;
+          } else {
+            console.log("Please enter position name");
+          }
+        },
+      },
+      {
+        type: "input",
+        name: "salary",
+        message: "Input the salary of position: ",
+        validate: (salary) => {
+          if (salary) {
+            return true;
+          } else {
+            console.log("Please enter position salary");
+          }
+        },
+      },
+      {
+        type: "input",
+        name: "department",
+        message: "Input the department of position: ",
+        validate: (department) => {
+          if (department) {
+            return true;
+          } else {
+            console.log("Please enter id of department");
+          }
+        },
+      },
+    ])
+    .then((newRole) => {
+      const sql = `INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)`;
+      const params = [newRole.title, newRole.salary, newRole.department];
+
+      db.query(sql, params, (err, rows) => {
+        if (err) throw err;
+        console.log("new role added");
+      });
+    });
+  userPrompt();
+}
+
 function userPrompt() {
   inquirer
     .prompt([
@@ -70,10 +148,10 @@ function userPrompt() {
           viewAllEmployees();
           break;
         case "Add a department":
-          //function
+          addDepartment();
           break;
         case "Add a role":
-          //function
+          addRole();
           break;
         case "Add an employee":
           //function
