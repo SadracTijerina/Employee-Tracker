@@ -7,8 +7,35 @@ function viewAllDepartments() {
   db.query(sql, (err, rows) => {
     if (err) throw err;
     console.table(rows);
-    userPrompt();
   });
+  userPrompt();
+}
+
+function viewAllRoles() {
+  const sql = `SELECT role.id, role.title, role.salary, department.name 
+              FROM role 
+              LEFT JOIN department
+              ON department.id = role.id`;
+
+  db.query(sql, (err, rows) => {
+    if (err) throw err;
+    console.table(rows);
+  });
+  userPrompt();
+}
+
+function viewAllEmployees() {
+  const sql = `SELECT employee.*, role.title, role.salary, department.name FROM employee
+                LEFT JOIN role
+                ON role.id = employee.role_id
+                LEFT JOIN department
+                ON role.department_id = department.id`;
+
+  db.query(sql, (err, rows) => {
+    if (err) throw err;
+    console.table(rows);
+  });
+  userPrompt;
 }
 
 function userPrompt() {
@@ -37,10 +64,10 @@ function userPrompt() {
           viewAllDepartments();
           break;
         case "View all roles":
-          //function
+          viewAllRoles();
           break;
         case "View all employees":
-          //function
+          viewAllEmployees();
           break;
         case "Add a department":
           //function
@@ -55,7 +82,7 @@ function userPrompt() {
           //function
           break;
         case "Quit application":
-          //function
+          process.exit();
           break;
         default:
           console.log("error");
